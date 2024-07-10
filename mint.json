@@ -11,7 +11,7 @@
     "light": "#07C983",
     "dark": "#0D9373",
     "background": {
-      "light": "#E0F4FF",
+      "light": "#ffffff",
       "dark": "#121481"
     },
     "anchors": {
@@ -33,32 +33,42 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "Contribute",
+      "url": "contribute"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
+      "name": "Join our slack",
       "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "url": "h"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "Github",
+      "icon": "github",
+      "url": "https://github.com/jacob-macleod/Dolphin-Flashcard-App"
+    },
+    {
+      "name": "Website",
+      "icon": "link",
+      "url": "http://dolphinflashcards.com"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
       "pages": [
         "introduction",
         "quickstart",
         "development"
+      ]
+    },
+    {
+      "group": "Contribute",
+      "pages": [
+        "contribute"
       ]
     },
     {
@@ -108,7 +118,7 @@
       "pages": [
         "api-reference/endpoint/statistics/calculate-streak",    
         "api-reference/endpoint/statistics/get-heatmap",    
-        "api-reference/endpoint/statistics/update-heatmap"    
+        "api-reference/endpoint/statistics/update-heat-map"    
       ]
     }
   ],
