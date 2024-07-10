@@ -1,15 +1,19 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Dolphin Flashcaard",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/dolphin_logo.svg",
+    "light": "/logo/dolphin_logo.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
+    "primary": "#FEB941",
     "light": "#07C983",
     "dark": "#0D9373",
+    "background": {
+      "light": "#E0F4FF",
+      "dark": "#121481"
+    },
     "anchors": {
       "from": "#0D9373",
       "to": "#07C983"
@@ -75,11 +79,36 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Card management",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/card-management/create-flashcard",
+        "api-reference/endpoint/card-management/create-folder",
+        "api-reference/endpoint/card-management/get-all-cards",
+        "api-reference/endpoint/card-management/get-flashcard",
+        "api-reference/endpoint/card-management/get-flashcard-1",
+        "api-reference/endpoint/card-management/get-flashcard-item",
+        "api-reference/endpoint/card-management/get-flashcard-item-1",
+        "api-reference/endpoint/card-management/get-today-cards",
+        "api-reference/endpoint/card-management/move-flashcard-set"
+      ]
+    },
+    {
+      "group": "Goal",
+      "pages": [
+        "api-reference/endpoint/goal/create-card-goal",
+        "api-reference/endpoint/goal/create-xp-goal",
+        "api-reference/endpoint/goal/edit-card-goal",
+        "api-reference/endpoint/goal/edit-xp-goal",
+        "api-reference/endpoint/goal/update-goal-status",
+        "api-reference/endpoint/goal/delete-goal"
+      ]
+    },
+    {
+      "group": "Statistics",
+      "pages": [
+        "api-reference/endpoint/statistics/calculate-streak",    
+        "api-reference/endpoint/statistics/get-heatmap",    
+        "api-reference/endpoint/statistics/update-heatmap"    
       ]
     }
   ],

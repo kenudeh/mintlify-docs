@@ -1,0 +1,1697 @@
+openapi: 3.1.0
+info:
+  version: '1.0'
+  title: DolphinFlashcardApp API
+  summary: Manage flashcards
+  description: 'Get or create flashcards, set learning goals, and track performance with your heatmap and streak. Data is available in JSON format only. <br></br>**Note**: All request body parameters are required, but the query parameters are optional.'
+  contact:
+    name: Support
+    url: 'https://dolphinflashcard.com/contact'
+    email: contact@dolphinflashcard.com
+  license:
+    url: 'https://en.wikipedia.org/wiki/MIT_License'
+    name: MIT
+servers:
+  - url: 'http://dolphinflashcards.com/api'
+    description: baseurl
+paths:
+  /create-flashcard:
+    post:
+      tags:
+        - Card management
+      summary: Create flashcard
+      description: 'Create or edit a flashcard set for a user. Flashcards contain front, back, review status, and last review date properties.'
+      operationId: create-flashcard
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: The unique ID of the user editing or creating flashcards.
+                  examples:
+                    - user1
+                flashcardName:
+                  type: string
+                  description: 'The name of the flashcard set. '
+                  examples:
+                    - firstCard
+                flashcardDescription:
+                  type: string
+                  description: The description of the flashcard set
+                  examples:
+                    - my first flashcard
+                folder:
+                  type: string
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by numeric figures.'
+                  examples:
+                    - top-level-parent-name/parent-name-2/parent-name-3
+                cards:
+                  type: array
+                  description: 'A list of flashcards. Each flashcard object has `front`, `back`, `review status`, and `last review` properties.'
+                  items:
+                    type: object
+                    properties:
+                      front:
+                        type: string
+                        description: 'The front side content of the flashcard.  '
+                        examples:
+                          - Monday
+                      back:
+                        type: string
+                        description: ' The back side content of the flashcard.     '
+                        examples:
+                          - Evening
+                      reviewStatus:
+                        type: string
+                        description: The review status of the flashcard
+                        examples:
+                          - '0.0'
+                      lastReview:
+                        type: string
+                        description: 'The date when the flashcard was last reviewed, in dd/mm/yyyy format.'
+                        examples:
+                          - 08/08/2024
+              required:
+                - userID
+                - flashcardName
+                - flashcardDescription
+                - folder
+                - cards
+              x-examples:
+                Example 1:
+                  userID: user1
+                  flashcardName: Expense Tracker
+                  flashcardDescription: A set of flashcards for tracking expenses
+                  folder: folder-name/folder-2
+                  cards:
+                    - front: Monday
+                      back: Evening
+                      reviewStatus: '0.0'
+                      lastReview: 01-01-2024
+                    - front: Tuesday
+                      back: Morning
+                      reviewStatus: '0.0'
+                      lastReview: 01-01-2024
+                    - front: Wednesday
+                      back: Afternoon
+                      reviewStatus: '0.0'
+                      lastReview: 01-01-2024
+      responses:
+        '200':
+          description: OK. Returned when the request is executed successfuly.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                x-examples:
+                  Example 1:
+                    success: true
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''flashcardName'': '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'': [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'': ''''}]}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''flashcardName'': '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'': [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'': ''''}]}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /create-folder:
+    post:
+      tags:
+        - Card management
+      summary: Create Folder
+      description: Create a folder for the user.
+      operationId: post-create-folder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: The unique identity of the user creating a folder.
+                  examples:
+                    - user1
+                folder:
+                  type: string
+                  description: 'The name or title of the folder to be created. '
+                  examples:
+                    - firstFolder
+              required:
+                - userID
+                - folder
+              x-examples:
+                Example 1:
+                  userID: user7000
+                  folder: firstFolder
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    description: Indicates that the folder has been successfully created.
+                    examples:
+                      - Folder firstFolder created
+                x-examples:
+                  Example 1:
+                    success: Folder firstFolder created
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible solution.
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': ''''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /get-flashcard:
+    get:
+      tags:
+        - Card management
+      summary: Get Flashcard
+      description: 'Retrieve a flashcard set based on the specified name, folder, and user ID. Returns null if the request body contains an invalid flashcard name and/or folder name'
+      operationId: get-get-flashcard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: The unique identifier of the user who owns the flashcard.
+                  examples:
+                    - user1
+                folder:
+                  type: string
+                  description: The name of the folder containing the flashcard.
+                  examples:
+                    - firstFolder
+                flashcardName:
+                  type: string
+                  description: The name or title of the flashcard to retrieve.
+                  examples:
+                    - firstCard
+              required:
+                - userID
+                - folder
+                - flashcardName
+              x-examples:
+                Example 1:
+                  userID: user1
+                  folder: firstFolder
+                  flashcardName: My new set
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cards:
+                    type: array
+                    description: 'The card ID, a 77-digits unique identifier of the exact flashcard retrieved from the folder.'
+                    items:
+                      type: string
+                  description:
+                    type: string
+                    description: 'The description of the flashcard. '
+                    examples:
+                      - my first flashcard
+                  name:
+                    type: string
+                    description: ' The name of the flashcard. '
+                    examples:
+                      - firstCard
+                x-examples:
+                  Example 1:
+                    cards:
+                      - '34491285524799755658107639929006996702748532692311513250222807523742322598240'
+                    description: my first flashcard
+                    name: firstCard
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error and provides a possible solution.  '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+    post:
+      tags:
+        - Card management
+      summary: Get Flashcard
+      description: 'Retrieve a flashcard set based on the specified name, folder, and user ID. Returns null if the request body contains an invalid flashcard name and/or folder name.'
+      operationId: post-get-flashcard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: 'The unique identifier of the user who owns the flashcard. '
+                  examples:
+                    - user1
+                folder:
+                  type: string
+                  description: ' The name of the folder containing the flashcard. '
+                  examples:
+                    - firstFolder
+                flashcardName:
+                  type: string
+                  description: The name or title of the flashcard to retrieve.
+                  examples:
+                    - firstCard
+              required:
+                - userID
+                - folder
+                - flashcardName
+              x-examples:
+                Example 1:
+                  userID: user1
+                  folder: firstFolder
+                  flashcardName: firstCard
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cards:
+                    type: array
+                    description: 'The card ID, a 77-digits unique identifier of the exact flashcard retrieved from the folder.'
+                    items:
+                      type: string
+                  description:
+                    type: string
+                    description: 'The description of the flashcard. '
+                    examples:
+                      - my first flashcard
+                  name:
+                    type: string
+                    description: 'The name of the flashcard.    '
+                    examples:
+                      - firstCard
+                x-examples:
+                  Example 1:
+                    cards:
+                      - '34491285524799755658107639929006996702748532692311513250222807523742322598240'
+                    description: my first flashcard
+                    name: firstCard
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error and provides a possible solution.  '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /get-flashcard-item:
+    get:
+      tags:
+        - Card management
+      summary: Get Flashcard Item
+      description: 'Get a flashcard item based on the card ID. Flashcard sets store multiple flashcard items, which are the individual flashcards.'
+      operationId: get-get-flashcard-item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cardID:
+                  type: string
+                  description: ' A 77-digits unique identifier of the specific card to retrieve from the flashcard set.'
+                  examples:
+                    - '34491212345799755658107639929006996702748532692311513250209090523742322511111'
+              required:
+                - cardID
+              x-examples:
+                Example 1:
+                  cardID: '34491212345799755658107639929006996702748532692311513250209090523742322511111'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  back:
+                    type: string
+                    description: 'The back side content of the flashcard. '
+                    examples:
+                      - Evening
+                  front:
+                    type: string
+                    description: The front side content of the flashcard.
+                    examples:
+                      - Monday
+                x-examples:
+                  Example 1:
+                    back: Evening
+                    front: Monday
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error and provides a possible solution. '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''cardID'': ''''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''cardID'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+    post:
+      tags:
+        - Card management
+      summary: Get Flashcard Item
+      description: 'Get a flashcard item based on the card ID. Flashcard sets store multiple flashcard items, which are the individual flashcards.'
+      operationId: post-get-flashcard-item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cardID:
+                  type: string
+                  description: The unique identifier of the specific card to retrieve from the flashcard set.
+                  examples:
+                    - '34491212345799755658107639929006996702748532692311513250209090523742322511111'
+              required:
+                - cardID
+              x-examples:
+                Example 1:
+                  cardID: '34491212345799755658107639929006996702748532692311513250209090523742322511111'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  back:
+                    type: string
+                    description: The back side content of the flashcard.
+                    examples:
+                      - Evening
+                  front:
+                    type: string
+                    description: 'The front side content of the flashcard. '
+                    examples:
+                      - Monday
+                x-examples:
+                  Example 1:
+                    back: Evening
+                    front: Monday
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: ' Describes the nature of the error and provides a possible solution.      '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''cardID'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''cardID'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /get-today-cards:
+    post:
+      tags:
+        - Card management
+      summary: Get Today Cards
+      description: 'Get all the flashcards to be learned today for a user. If a card''s review status is 0.0, it is not started; if it is 0.x, it is actively studying; if it is >= 1.x, it is learned.'
+      operationId: get-get-today-cards
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: 'The identity of the user learning the flashcards today. '
+                  examples:
+                    - user1
+              required:
+                - userID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Folder:
+                    type: object
+                    description: A parent folder containing flashcards.
+                    properties:
+                      Flashcard:
+                        type: object
+                        description: The first flashcard in the current folder.
+                        properties:
+                          cards:
+                            type: object
+                            description: An object contaning the `cardID` of the current flashcard.
+                            properties:
+                              cardID:
+                                type: object
+                                description: A 77-digit unique identifier for a specific card item within the flashcard. Has `last_review` and `review_status` properties.
+                                properties:
+                                  last_review:
+                                    type: string
+                                    description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
+                                    examples:
+                                      - 02/07/2024
+                                  review_status:
+                                    type: string
+                                    description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned.'
+                                    examples:
+                                      - '0.0'
+                          flashcardID:
+                            type: string
+                            description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                            examples:
+                              - '6796878844471389968582206160161573797336081811111331165973477783999823937257'
+                          flashcardName:
+                            type: string
+                            description: 'The name of the current flashcard.  '
+                            examples:
+                              - firstFlashCard
+                      secondFlashcard:
+                        type: object
+                        description: Another flashcard within the current folder.
+                        properties:
+                          cards:
+                            type: object
+                            description: An object contaning the `cardID` of the current flashcard.
+                            properties:
+                              cardID:
+                                type: object
+                                description: A 77-digit unique identifier for a specific card item within the flashcard. Has `last_review` and `review_status` properties.
+                                properties:
+                                  last_review:
+                                    type: string
+                                    description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
+                                    examples:
+                                      - 03/07/2024
+                                  review_status:
+                                    type: string
+                                    description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned.'
+                                    examples:
+                                      - '0.0'
+                          flashcardID:
+                            type: string
+                            description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                          flashcardName:
+                            type: string
+                            description: 'The name of the current flashcard.  '
+                            examples:
+                              - secondFlashCard
+                  top-level-parent-name:
+                    type: object
+                    description: Another parent folder within the same account that contains nested folders and flashcards. It has a different naming convention from the previous folder.
+                    properties:
+                      parent-name-2:
+                        type: object
+                        description: A folder nested within the `top-level-parent-name` folder that further organizes flashcards.
+                        properties:
+                          parent-name-3:
+                            type: object
+                            description: 'A folder nested within the `parent-name-2 folder`, containing specific flashcards.'
+                            properties:
+                              Flashcard:
+                                type: object
+                                description: The first flashcard in the current folder.
+                                properties:
+                                  cards:
+                                    type: object
+                                    description: An object contaning the `cardID` of the current flashcard.
+                                    properties:
+                                      cardID:
+                                        type: object
+                                        description: A 77-digit unique identifier for a specific card item within the flashcard. Has `last_review` and `review_status` properties.
+                                        properties:
+                                          last_review:
+                                            type: string
+                                            description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
+                                          review_status:
+                                            type: string
+                                            description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned.'
+                                  flashcardID:
+                                    type: string
+                                    description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                                  flashcardName:
+                                    type: string
+                                    description: 'The name of the current flashcard.  '
+                x-examples:
+                  Example 1:
+                    My first folder:
+                      firstFlashcard:
+                        cards:
+                          cardID:
+                            last_review: 02/07/2024
+                            review_status: '0.0'
+                        flashcardID: '6796878844471389968582206160161573797336081897254331165973477783999823937257'
+                        flashcardName: firstCard
+                      secondFlashcard:
+                        cards:
+                          cardID:
+                            last_review: 03/07/2024
+                            review_status: '0.0'
+                        flashcardID: '6796878844471389968582206160161573797336081897254331165973477783999823937257'
+                        flashcardName: secondCard
+                    top-level-parent-name:
+                      parent-name-2:
+                        parent-name-3:
+                          flashcardName:
+                            cards:
+                              '37117561297934638728634279553695852046447234529246203144425130738760147640868':
+                                last_review: 02/07/2024
+                                review_status: '0.0'
+                            flashcardID: '6796878844881389968582206160161573797336081897254331165973477783999823937257'
+                            flashcardName: firstCard
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible solution.
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''string''}'
+              examples:
+                Example 1:
+                  value:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''string''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /get-all-cards:
+    post:
+      tags:
+        - Card management
+      summary: Get All Cards
+      description: Get all the flashcards created by a user.
+      operationId: post-get-all-cards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: Identifies the user who wants to retrieve their flashcards.
+                  examples:
+                    - user1
+              required:
+                - userID
+              x-examples:
+                Example 1:
+                  userID: user1
+      responses:
+        '200':
+          description: 'OK. Returns the string: `"User has no flashcards"` when supplied an invalid userID.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Folder:
+                    type: object
+                    description: A parent folder containing flashcards.
+                    properties:
+                      Flashcard:
+                        type: object
+                        description: 'The first flashcard in the current folder.   '
+                        properties:
+                          cards:
+                            type: object
+                            description: An object contaning the `cardID` of the current flashcard.
+                            properties:
+                              cardID:
+                                type: object
+                                description: A 77-digit unique identifier for a specific card item within the flashcard. Has last_review and review_status properties.
+                                properties:
+                                  last_review:
+                                    type: string
+                                    description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
+                                  review_status:
+                                    type: string
+                                    description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned. '
+                          flashcardID:
+                            type: string
+                            description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                          flashcardName:
+                            type: string
+                            description: The name of the current flashcard.
+                      secondFlashcard:
+                        type: object
+                        description: 'The second flashcard in the current folder.   '
+                        properties:
+                          cards:
+                            type: object
+                            description: An object contaning the `cardID` of the current flashcard.
+                            properties:
+                              cardID:
+                                type: object
+                                description: A 77-digit unique identifier for a specific card item within the flashcard. Has last_review and review_status properties.
+                                properties:
+                                  last_review:
+                                    type: string
+                                    description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
+                                  review_status:
+                                    type: string
+                                    description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned. '
+                          flashcardID:
+                            type: string
+                            description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                          flashcardName:
+                            type: string
+                            description: The name of the current flashcard.
+                  top-level-parent-name:
+                    type: object
+                    description: Another parent folder within the same account that contains nested folders and flashcards. It has a different naming convention from the previous folder.
+                    properties:
+                      parent-name-2:
+                        type: object
+                        description: A folder nested within the `top-level-parent-name` folder that further organizes flashcards.
+                        properties:
+                          parent-name-3:
+                            type: object
+                            description: 'A folder nested within the parent-name-2 folder, containing specific flashcards.'
+                            properties:
+                              Flashcard:
+                                type: object
+                                description: 'The first flashcard in the current folder.   '
+                                properties:
+                                  cards:
+                                    type: object
+                                    description: An object contaning the `cardID` of the current flashcard.
+                                    properties:
+                                      cardID:
+                                        type: object
+                                        description: A 77-digit unique identifier for a specific card item within the flashcard. Has last_review and review_status properties.
+                                        properties:
+                                          last_review:
+                                            type: string
+                                            description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
+                                          review_status:
+                                            type: string
+                                            description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned. '
+                                  flashcardID:
+                                    type: string
+                                    description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                                  flashcardName:
+                                    type: string
+                                    description: The name of the current flashcard.
+                x-examples:
+                  Example 1:
+                    My first folder:
+                      firstFlashcard:
+                        cards:
+                          cardID:
+                            last_review: 02/07/2024
+                            review_status: '0.0'
+                        flashcardID: '6796878844471389968582206160161573797336081897254331165973477783999823937257'
+                        flashcardName: firstCard
+                      secondFlashcard:
+                        cards:
+                          cardID:
+                            last_review: 03/07/2024
+                            review_status: '0.0'
+                        flashcardID: '6796878844471389968582206160161573797336081897254331165973477783999823937257'
+                        flashcardName: secondCard
+                    My second folder: {}
+                    My third folder: {}
+                    top-level-parent-name:
+                      parent-name-2:
+                        parent-name-3:
+                          flashcardName:
+                            cards:
+                              '37117561297934638728634279553695852046447234529246203144425130738760147640868':
+                                last_review: 02/07/2024
+                                review_status: '0.0'
+                            flashcardID: '6796878844881389968582206160161573797336081897254331165973477783999823937257'
+                            flashcardName: firstCard
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible solution.
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''''
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /move-flashcard-set:
+    post:
+      tags:
+        - Card management
+      summary: Move Flashcard Set
+      description: Move a flashcard set to a new location.
+      operationId: post-move-flashcard-set
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: 'The identity of the user moving their flashcard set to a new location. '
+                  examples:
+                    - user1
+                currentLocation:
+                  type: string
+                  description: 'The current folder path. '
+                  examples:
+                    - My-first-folder
+                flashcardID:
+                  type: string
+                  description: A 77-digit unique identifier of the flashcard. This is different from cardID.
+                  examples:
+                    - '22456683691481111127441553357143855166282726011111761972795191711430217049598'
+                moveLocation:
+                  type: string
+                  description: 'The destination folder path. '
+                  examples:
+                    - My-third-folder
+              required:
+                - userID
+                - currentLocation
+                - flashcardID
+                - moveLocation
+              x-examples:
+                Example 1:
+                  userID: user1
+                  currentLocation: top-level-parent-name/parent-name-2
+                  flashcardID: '6796878844881'
+                  moveLocation: My-third-folder
+      responses:
+        '200':
+          description: 'OK. Returns the string: `"Flashcard not found in current location"` when supplied an invalid folder path.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    description: Indicates that the flashcard set at the specified path has been successfully moved to a new folder.
+                    examples:
+                      - The flashcard set at /users/user700430/flashcards/top-level-parent-name/parent-name-2/parent-name-3/flashcardName/6796878844881389968582206160161573797336081897254331165973477783999823937257 has been moved to My third folder
+                x-examples:
+                  Example 1:
+                    success: The flashcard set at /users/user700430/flashcards/top-level-parent-name/parent-name-2/parent-name-3/flashcardName/6796878844881389968582206160161573797336081897254331165973477783999823937257 has been moved to My third folder
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error and provides a possible solution. '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''currentLocation'': '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''currentLocation'': '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /create-xp-goal:
+    post:
+      tags:
+        - Goal
+      summary: Create XP Goal
+      description: 'Create an experience points (XP) goal for the user. XP goals have an `ID`, `type`, `title`, `end date`, `status` (failed, completed, or in progress), `fail date` (if failed), and `data storing` (start date, starting XP, desired XP) properties.'
+      operationId: post-create-xp-goal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: Identifies the user who is creating an XP goal.
+                  examples:
+                    - user1
+                goalXP:
+                  type: string
+                  description: The desired amount of experience points (XP) the user aims to achieve with this goal.
+                  examples:
+                    - '100'
+                endDate:
+                  type: string
+                  description: 'The date by which the user intends to achieve the XP goal, in dd/mm/yyyy format.'
+                  examples:
+                    - 08/08/2024
+              required:
+                - userID
+                - goalXP
+                - endDate
+              x-examples:
+                Example 1:
+                  userID: '123'
+                  goalXP: '100'
+                  endDate: 30/01/2022
+            examples:
+              Example 1:
+                value:
+                  userID: '123'
+                  goalXP: '100'
+                  endDate: 08/08/2024
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    description: Provides additional information confirming that the request was successful.
+                    examples:
+                      - Goal created successfully
+                x-examples:
+                  Example 1:
+                    success: Goal created successfully
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error and provides a possible solution. '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''goalXP'': '' '', ''endDate'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format:  {''userID'': ''string'', ''goalXP'': ''number'', ''endDate'': ''sample-date''}'
+              examples:
+                Example 1:
+                  value:
+                    error: Your supplied json keys do not match the expected format.
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: create-xp
+  /create-card-goal:
+    post:
+      tags:
+        - Goal
+      summary: Create Card Goal
+      description: "Create a card goal for the user. Card goals have the following properties: `ID`, `type` (XP), `title`, `end date`, `status` (failed, completed, or in progress), `fail date` (if failed), and `data storing` (cards revised so far, starting XP, desired cards to revise). A card goal is similar to an XP goal but differs in the data section.\r\n\r\n"
+      operationId: post-create-card-goal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: Identifies the user who is creating a card goal.
+                  examples:
+                    - user1
+                cardsToRevise:
+                  type: string
+                  description: The number of cards the user intends to revise for the current goal.
+                  examples:
+                    - '5'
+                endDate:
+                  type: string
+                  description: "The date by which the user intends to achieve the card revision goal, in dd/mm/yyyy format.\t"
+                  examples:
+                    - 30/07/2024
+              required:
+                - userID
+                - cardsToRevise
+                - endDate
+              x-examples:
+                Example 1:
+                  userID: user7000
+                  cardsToRevise: '4'
+                  endDate: 07/07/2024
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    description: ' Provides additional information confirming that the request was successful.'
+                    examples:
+                      - Goal created successfully
+                x-examples:
+                  Example 1:
+                    success: Goal created successfully
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: ' Describes the nature of the error and provides a possible solution.   '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''cardsToRevise'': '' '', ''endDate'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''cardsToRevise'': '''', ''endDate'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: ''
+  /update-goal-status:
+    post:
+      tags:
+        - Goal
+      summary: Update Goal Status
+      description: 'Update the status of a goal. The possible values for the status of a goal are `completed`, `in progress`, or `failed`. Returns an empty object when the userID provided is invalid.'
+      operationId: post-update-goal-status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: An identifier for the user who is updating the goal status.
+                  examples:
+                    - user1
+              required:
+                - userID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  goalID-1:
+                    type: object
+                    description: 'A 77-digit unique identifier or key associated with each goal. '
+                    properties:
+                      data:
+                        type: object
+                        description: ' An object containing goal-specific metrics, such as `goal_xp`, `start_date`, and `starting_xp` for XP goals or `cards_to_revise` and `cards_revised_so_far` for card goals '
+                        properties:
+                          cards_revised_so_far:
+                            type: string
+                            description: 'Associated with card goals, this indicates the number of cards revised so far.'
+                            examples:
+                              - '0'
+                          cards_to_revise:
+                            type: string
+                            description: 'Associated with card goals, this specifies the total number of cards to be revised.'
+                            examples:
+                              - '4'
+                      end_date:
+                        type: string
+                        description: 'The date by which the current goal must end, in dd/mm/yyyy format.'
+                        examples:
+                          - 07/07/2024
+                      fail_date:
+                        type: string
+                        description: 'The date on which the goal''s status changed to ''failed''. This field is only populated if the goal fails; otherwise, it is an empty string.'
+                        examples:
+                          - '" "'
+                      status:
+                        type: string
+                        description: 'The current status of a goal, which can be either `completed`, `in progress`, or `failed`.'
+                        examples:
+                          - in progress
+                      title:
+                        type: string
+                        description: 'The name assigned to a goal. '
+                        examples:
+                          - Revise 4 cards by 07/07/2024
+                      type:
+                        type: string
+                        description: ' The nature of a goal. Goals can either be of type `Card` or `XP`. '
+                        examples:
+                          - Card
+                  goalID-2:
+                    type: object
+                    description: 'A 77-digit unique identifier or key associated with each goal. '
+                    properties:
+                      data:
+                        type: object
+                        description: ' An object containing goal-specific metrics, such as `goal_xp`, `start_date`, and `starting_xp` for XP goals or `cards_to_revise` and `cards_revised_so_far` for card goals '
+                        properties:
+                          goal_xp:
+                            type: string
+                            description: 'Associated with XP goals, this specifies the target amount of experience points (XP) the user aims to achieve.'
+                            examples:
+                              - '60'
+                          start_date:
+                            type: string
+                            description: ' Associated with XP goals, this indicates the date when the XP goal began. '
+                            examples:
+                              - 03/07/2024
+                          starting_xp:
+                            type: string
+                            description: 'Associated with XP goals, this indicates the initial amount of experience points (XP) at the beginning of the goal.'
+                            examples:
+                              - '0'
+                      end_date:
+                        type: string
+                        description: 'The date by which the current goal must end, in dd/mm/yyyy format.'
+                        examples:
+                          - 30/07/2024
+                      fail_date:
+                        type: string
+                        description: 'The date on which the goal''s status changed to ''failed''. This field is only populated if the goal fails; otherwise, it is an empty string.'
+                        examples:
+                          - ' " "'
+                      status:
+                        type: string
+                        description: 'The current status of a goal, which can be either `completed`, `in progress`, or `failed`.'
+                        examples:
+                          - in progress
+                      title:
+                        type: string
+                        description: 'The name assigned to a goal. '
+                        examples:
+                          - Gain 60 XP by 30/07/2024
+                      type:
+                        type: string
+                        description: ' The nature of a goal. Goals can either be of type `Card` or `XP`. '
+                        examples:
+                          - XP
+                x-examples:
+                  Example 1:
+                    '27730416841422320452490899630401426960300250535420717368523585221911685508588':
+                      data:
+                        cards_revised_so_far: '0'
+                        cards_to_revise: '4'
+                      end_date: 07/07/2024
+                      fail_date: ''
+                      status: in progress
+                      title: Revise 4 cards by 07/07/2024
+                      type: Card
+                    '46882192866017507647804408894345572659406282731228567391554804537877046919642':
+                      data:
+                        goal_xp: '60'
+                        start_date: 03/07/2024
+                        starting_xp: '0'
+                      end_date: 30/07/2024
+                      fail_date: ''
+                      status: in progress
+                      title: Gain 60 XP by 30/07/2024
+                      type: XP
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible solution.
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' ''} '
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''string''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /edit-card-goal:
+    post:
+      tags:
+        - Goal
+      summary: Edit Card Goal
+      description: Edit an existing card goal for the user.
+      operationId: post-edit-card-goal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: 'Identifies the user who is editing their card goal.  '
+                  examples:
+                    - user1
+                goalID:
+                  type: string
+                  description: A 77-digit unique identifier or key associated with the card goal being edited.
+                  examples:
+                    - '11110748168480479028433924465493243860761911102946223297681236368808083322222'
+                newEndDate:
+                  type: string
+                  description: 'The new end date for the card goal, in `dd/mm/yyyy` format. '
+                  examples:
+                    - 30/07/2024
+                newTitle:
+                  type: string
+                  description: The new title assigned to the card goal.
+                  examples:
+                    - Updated Goal
+                newCardsToRevise:
+                  type: string
+                  description: 'Specifies the updated number of cards the user intends to revise for this goal. '
+                  examples:
+                    - '4'
+              required:
+                - userID
+                - goalID
+                - newEndDate
+                - newTitle
+                - newCardsToRevise
+              x-examples:
+                Example 1:
+                  userID: user7000
+                  goalID: '58748748168480479028433924465493243860761911102946223297681236368808083325563'
+                  newEndDate: 30/07/2024
+                  newTitle: Updated Goal
+                  newCardsToRevise: 8
+            examples:
+              Example 1:
+                value:
+                  userID: '123'
+                  goalID: goal1
+                  newEndDate: 30/01/2022
+                  newTitle: title1
+                  newCardsToRevise: '4'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    description: Provides additional information confirming that the request was successful.
+                    examples:
+                      - Goal updated successfully
+                x-examples:
+                  Example 1:
+                    success: Goal updated successfully
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible solution.
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''goalID'': '' '', ''newEndDate'': '''', ''newTitle'': '' '', ''newCardsToRevise'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''goalID'': '''', ''newEndDate'': '''', ''newTitle'': '''', ''newCardsToRevise'': ''''}'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error.
+                    examples:
+                      - Goal not found
+                x-examples:
+                  Example 1:
+                    error: Goal not found
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /edit-xp-goal:
+    post:
+      tags:
+        - Goal
+      summary: Edit XP Goal
+      description: Edit an existing experience points (XP) goal for the user.
+      operationId: post-edit-xp-goal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: 'Identifies the user who is editing their XP goal.    '
+                goalID:
+                  type: string
+                  description: A 77-digit unique identifier or key associated with the XP goal being edited.
+                  examples:
+                    - '55335192866017507647804408894345572659406282731228567391554804537877046919111'
+                newEndDate:
+                  type: string
+                  description: ' The new end date for the XP goal, formatted as `dd/mm/yyyy`. '
+                  examples:
+                    - 08/08/2024
+                newTitle:
+                  type: string
+                  description: 'The new title assigned to the XP goal. '
+                  examples:
+                    - Updated Title for XP Goal
+                newGoalXP:
+                  type: string
+                  description: The new desired amount of experience points (XP) the user intends to achieve with this goal.
+                  examples:
+                    - '80'
+              required:
+                - userID
+                - goalID
+                - newEndDate
+                - newTitle
+                - newGoalXP
+              x-examples:
+                Example 1:
+                  userID: user7000
+                  goalID: '46882192866017507647804408894345572659406282731228567391554804537877046919642'
+                  newEndDate: 08/08/2024
+                  newTitle: Updated Title for XP Goal
+                  newGoalXP: '80'
+            examples:
+              Example 1:
+                value:
+                  userID: user123
+                  goalID: goal1
+                  newEndDate: 08/08/2024
+                  newTitle: title1
+                  newGoalXP: '40'
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    description: Provides additional information confirming that the request was successful.
+                    examples:
+                      - Goal updated successfully
+                x-examples:
+                  Example 1:
+                    success: Goal updated successfully
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error and provides a possible solution. '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''goalID'': '' '', ''newEndDate'': '' '', ''newTitle'': '' '', ''newGoalXP'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''goalID'': '''', ''newEndDate'': ''^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$'', ''newTitle'': '''', ''newGoalXP'': ''^\\d+$''}'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error. '
+                    examples:
+                      - Goal not found
+                x-examples:
+                  Example 1:
+                    error: Goal not found
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /delete-goal:
+    delete:
+      tags:
+        - Goal
+      summary: Delete Goal
+      description: Delete a user's goal.
+      operationId: delete-delete-goal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: 'Identifies the user deleting a goal. '
+                  examples:
+                    - user1
+                goalID:
+                  type: string
+                  description: A 77-digit unique identifier or key associated with the goal being deleted.
+                  examples:
+                    - goal1
+              required:
+                - userID
+                - goalID
+              x-examples:
+                Example 1:
+                  userID: '123'
+                  goalID: goal1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    description: Provides additional information confirming that the request was successful.
+                    examples:
+                      - Goal deleted successfully
+                x-examples:
+                  Example 1:
+                    success: Goal deleted successfully
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error and provides a possible solution. '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''goalID'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''goalID'': ''''}'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /update-heatmap:
+    post:
+      tags:
+        - Statistics
+      summary: Update Heat map
+      description: Updates the user's heatmap data when their streak is modified.
+      operationId: post-update-heatmap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: 'Identifies the user with an updated heatmap data. '
+                  examples:
+                    - user1
+              required:
+                - userID
+              x-examples:
+                Example 1:
+                  user1: '123'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Provides more details about the error.
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Provides details about the nature of the error.
+                    examples:
+                      - User does not exist!
+                x-examples:
+                  Example 1:
+                    error: User does not exist!
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /get-heatmap:
+    get:
+      tags:
+        - Statistics
+      summary: Get Heatmap
+      description: Retrieve the user's heatmap data.
+      operationId: get-get-heatmap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: 'Identifies the user whose heatmap data is being retrieved. '
+                  examples:
+                    - user1
+              required:
+                - userID
+              x-examples:
+                Example 1:
+                  userID: '123'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: 'Describes the nature of the error and provides a possible solution. '
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Provides details about the nature of the error.
+                    examples:
+                      - User does not exist!
+                x-examples:
+                  Example 1:
+                    error: User does not exist!
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+  /calculate-streak:
+    post:
+      tags:
+        - Statistics
+      summary: Calculate Streak
+      description: 'Calculate the user''s streak, and increase it if necessary.'
+      operationId: post-calculate-streak
+      parameters:
+        - name: increase
+          in: query
+          description: 'Add to the query string to increase a user''s streak. If needed, set `increase = true`'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                  description: Identifies the owner of the streak.
+                  examples:
+                    - user1
+              required:
+                - userID
+            examples:
+              Example 1:
+                value:
+                  userID: '123'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible solution.
+                    examples:
+                      - 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' ''}'
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+        '500':
+          description: 'Internal server error. '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible reason.
+                    examples:
+                      - User does not exist.
+                x-examples:
+                  Example 1:
+                    error: '''NoneType'' object is not subscriptable'
+      servers:
+        - url: 'http://dolphinflashcards.com/api'
+          description: baseurl
+tags:
+  - name: Card management
+    description: Organises the Card management endpoints
+  - name: Goal
+    description: Organises the Goal endpoints
+  - name: Statistics
+    description: Organises the Statistics endpoints
+components:
+  securitySchemes:
+    apiKey_1:
+      type: apiKey
+      name: apiKey
+      in: query
