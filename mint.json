@@ -22,7 +22,7 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "support@dolphinflashcard.com"
     }
   ],
   "topbarCtaButton": {
@@ -43,7 +43,7 @@
     {
       "name": "Join our slack",
       "icon": "slack",
-      "url": "h"
+      "url": "https://www.slack.com"
     },
     {
       "name": "Github",
@@ -68,7 +68,7 @@
     {
       "group": "Contribute",
       "pages": [
-        "contribute"
+        "contribute/contributing"
       ]
     },
     {
@@ -85,7 +85,14 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/introduction"
+        "api-reference/introduction",
+        "api-reference/authentication"
+      ]
+    },
+    {
+      "group": "Account",        
+      "pages": [
+        "api-reference/endpoint/account\\create-account"
       ]
     },
     {
@@ -103,7 +110,7 @@
       ]
     },
     {
-      "group": "Goal",
+      "group": "Goals",
       "pages": [
         "api-reference/endpoint/goal/create-card-goal",
         "api-reference/endpoint/goal/create-xp-goal",
@@ -119,6 +126,19 @@
         "api-reference/endpoint/statistics/calculate-streak",    
         "api-reference/endpoint/statistics/get-heatmap",    
         "api-reference/endpoint/statistics/update-heat-map"    
+      ]
+    },
+    {
+      "group": "SAMPLE",
+      "pages": [
+        {
+          "group": "Calculate streak",
+          "pages": ["api-reference/endpoint/statistics/calculate-streak"]
+        }, 
+        {
+          "group": "Get heatmap",
+          "pages": ["api-reference/endpoint/statistics/get-heatmap"]
+        }     
       ]
     }
   ],
