@@ -92,59 +92,100 @@
     {
       "group": "Account",        
       "pages": [
-        "api-reference/endpoint/account\\create-account"
+        {
+          "group": "Create account",
+          "pages": ["api-reference/endpoint/account/create-account"]
+        }
       ]
     },
     {
       "group": "Card management",
       "pages": [
-        "api-reference/endpoint/card-management/create-flashcard",
-        "api-reference/endpoint/card-management/create-folder",
-        "api-reference/endpoint/card-management/get-all-cards",
-        "api-reference/endpoint/card-management/get-flashcard",
-        "api-reference/endpoint/card-management/get-flashcard-1",
-        "api-reference/endpoint/card-management/get-flashcard-item",
-        "api-reference/endpoint/card-management/get-flashcard-item-1",
-        "api-reference/endpoint/card-management/get-today-cards",
-        "api-reference/endpoint/card-management/move-flashcard-set"
+        {
+          "group": "Create flashcard",
+          "pages": ["api-reference/endpoint/card-management/create-flashcard"]
+        },
+        {
+          "group": "Create folder",
+          "pages": ["api-reference/endpoint/card-management/create-folder"]
+        },
+        {
+          "group": "Get all cards",
+          "pages": ["api-reference/endpoint/card-management/get-all-cards"]
+        },
+        {
+          "group": "Get flashcard",
+          "pages": [
+            "api-reference/endpoint/card-management/get-flashcard",
+            "api-reference/endpoint/card-management/get-flashcard-1"
+          ]
+        },
+        {
+          "group": "Get flashcard item",
+          "pages": [
+            "api-reference/endpoint/card-management/get-flashcard-item",
+            "api-reference/endpoint/card-management/get-flashcard-item-1"
+          ]
+        },
+        {
+          "group": "Get today cards",
+          "pages": ["api-reference/endpoint/card-management/get-today-cards"]
+        },
+        {
+          "group": "Move flashcard set",
+          "pages": ["api-reference/endpoint/card-management/move-flashcard-set"]
+        }
       ]
     },
     {
       "group": "Goals",
       "pages": [
-        "api-reference/endpoint/goal/create-card-goal",
-        "api-reference/endpoint/goal/create-xp-goal",
-        "api-reference/endpoint/goal/edit-card-goal",
-        "api-reference/endpoint/goal/edit-xp-goal",
-        "api-reference/endpoint/goal/update-goal-status",
-        "api-reference/endpoint/goal/delete-goal"
+        {
+          "group": "Create card goal",
+          "pages": ["api-reference/endpoint/goal/create-card-goal"]
+        },
+        {
+          "group": "Create xp goal",
+          "pages": ["api-reference/endpoint/goal/create-xp-goal"]
+        },
+        {
+          "group": "Edit card goal",
+          "pages": ["api-reference/endpoint/goal/edit-card-goal"]
+        },
+        {
+          "group": "Create xp goal",
+          "pages": ["api-reference/endpoint/goal/edit-xp-goal"]
+        },
+        {
+          "group": "Update goal status",
+          "pages": ["api-reference/endpoint/goal/update-goal-status"]
+        },
+        {
+          "group": "Delete goal",
+          "pages": ["api-reference/endpoint/goal/delete-goal"]
+        }
       ]
     },
     {
       "group": "Statistics",
       "pages": [
-        "api-reference/endpoint/statistics/calculate-streak",    
-        "api-reference/endpoint/statistics/get-heatmap",    
-        "api-reference/endpoint/statistics/update-heat-map"    
-      ]
-    },
-    {
-      "group": "SAMPLE",
-      "pages": [
         {
           "group": "Calculate streak",
           "pages": ["api-reference/endpoint/statistics/calculate-streak"]
-        }, 
+        },
         {
           "group": "Get heatmap",
           "pages": ["api-reference/endpoint/statistics/get-heatmap"]
+        },
+        {
+          "group": "Update heatmap",
+          "pages": ["api-reference/endpoint/statistics/update-heat-map"]
         }     
       ]
     }
   ],
   "footerSocials": {
     "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "github": "https://github.com/jacob-macleod/Dolphin-Flashcard-App"
   }
 }
