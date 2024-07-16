@@ -33,10 +33,6 @@
     {
       "name": "API Reference",
       "url": "api-reference"
-    },
-    {
-      "name": "Contribute",
-      "url": "contribute"
     }
   ],
   "anchors": [
@@ -58,28 +54,25 @@
   ],
   "navigation": [
     {
+      "group": "Welcome",
+      "pages": [
+        "conceptual-docs/introduction"
+      ]
+    },
+    {
       "group": "Getting Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "conceptual-docs/whydolphin",
+        "conceptual-docs/howitworks",
+        "conceptual-docs/quickstart"
       ]
     },
     {
-      "group": "Contribute",
+      "group": "Extras",
       "pages": [
-        "contribute/contributing"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "extras/terminology",
+        "extras/contributing",
+        "extras/changelog"
       ]
     },
     {
@@ -185,7 +178,7 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
+    "x": "https://x.com",
     "github": "https://github.com/jacob-macleod/Dolphin-Flashcard-App"
   }
 }
