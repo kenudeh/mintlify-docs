@@ -1,22 +1,22 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Dolphin Flashcaard",
+  "name": "Dolphin Flashcard",
   "logo": {
     "dark": "/logo/dolphin_logo.svg",
     "light": "/logo/dolphin_logo.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#FEB941",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#6A84C5",
+    "light": "#6A84C5",
+    "dark": "#32519E",
     "background": {
-      "light": "#e2edff",
-      "dark": "#121481"
+      "light": "#0D2944",
+      "dark": "#0D2944"
     },
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#6A84C5",
+      "to": "#6A84C5"
     }
   },
   "topbarLinks": [
@@ -37,9 +37,9 @@
   ],
   "anchors": [
     {
-      "name": "Join our slack",
-      "icon": "slack",
-      "url": "https://www.slack.com"
+      "name": "Join us on Discord",
+      "icon": "discord",
+      "url": "https://www.discord.com"
     },
     {
       "name": "Github",
@@ -178,7 +178,7 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com",
+    "x": "https://x.com/dolphinflshcrds",
     "github": "https://github.com/jacob-macleod/Dolphin-Flashcard-App"
   }
 }
