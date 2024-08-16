@@ -32,19 +32,28 @@ paths:
                 x-examples:
                   Example 1:
                     - success: true
+                    - 200
                 items:
                   type:
                     - object
                     - integer
+                  example: 200
                   properties:
                     '200':
                       type: integer
                       x-stoplight:
-                        id: u25y67mw6ls4v
-                      description: HTTP status code indicating a successful operation.
-                    success:
-                      type: boolean
-                      description: Indicates that a new user account was created successfully.
+                        id: 9ay8asg75dn11
+                      example: 200
+                    '':
+                      type: object
+                      x-stoplight:
+                        id: 57rr5zr572ubz
+                      properties:
+                        success:
+                          type: string
+                          x-stoplight:
+                            id: wrg28qp8d1bwf
+                          example: 'true'
         '400':
           description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
@@ -58,6 +67,7 @@ paths:
                   error:
                     type: string
                     description: Describes the nature of the error and provides a possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''displayName'': ''''}'
       operationId: post-create-account
       x-stoplight:
         id: 7n7de91o3dz9d
@@ -102,7 +112,7 @@ paths:
                     - integer
                   properties:
                     '200':
-                      type: string
+                      type: integer
                       x-stoplight:
                         id: hvhaj9owg6b59
                       description: HTTP status code indicating a successful operation.
@@ -141,15 +151,15 @@ paths:
                     - front: Monday
                       back: Evening
                       reviewStatus: '0.0'
-                      lastReview: 01-01-2024
+                      lastReview: 13-01-2024
                     - front: Tuesday
                       back: Morning
                       reviewStatus: '0.0'
-                      lastReview: 01-01-2024
+                      lastReview: 14-01-2024
                     - front: Wednesday
                       back: Afternoon
                       reviewStatus: '0.0'
-                      lastReview: 01-01-2024
+                      lastReview: 15-01-2024
               required:
                 - userID
                 - flashcardName
@@ -181,11 +191,11 @@ paths:
                     properties:
                       front:
                         type: string
-                        description: 'The front side content of the flashcard.  '
+                        description: 'The front side content of the flashcard.'
                         example: Monday
                       back:
                         type: string
-                        description: ' The back side content of the flashcard.     '
+                        description: ' The back side content of the flashcard.'
                         example: Evening
                       reviewStatus:
                         type: string
@@ -194,7 +204,7 @@ paths:
                       lastReview:
                         type: string
                         description: 'The date when the flashcard was last reviewed, in dd/mm/yyyy format.'
-                        example: 08/08/2024
+                        example: 13/08/2024
         description: ''
       parameters: []
       tags:
@@ -914,7 +924,7 @@ paths:
       operationId: post-move-flashcard-set
       x-stoplight:
         id: o2sks9y2lv56j
-      description: Move a flashcard set to a new location.
+      description: Move a flashcard set to a new location. Folder locations, such as `currentLocation` or `moveLocation`, are in the format **"myfolder 1/myfolder2"**. If the card is in the root folder, the folder path is **""**.
       requestBody:
         content:
           application/json:
