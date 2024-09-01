@@ -22,13 +22,10 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "support@dolphinflashcard.com"
+      "url": "http://dolphinflashcards.com"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
+
   "tabs": [
     {
       "name": "API Reference",
@@ -37,9 +34,9 @@
   ],
   "anchors": [
     {
-      "name": "Join us on Discord",
-      "icon": "discord",
-      "url": "https://www.discord.com"
+      "name": "Join the team on Slack",
+      "icon": "Slack",
+      "url": "https://join.slack.com/t/dolphinflashcards/shared_invite/zt-2pfey518m-Zw5D3xQbW94_PZAjDfLSUQ"
     },
     {
       "name": "Github",
