@@ -151,15 +151,15 @@ paths:
                     - front: Monday
                       back: Evening
                       reviewStatus: '0.0'
-                      lastReview: 13-01-2024
+                      lastReview: 13-07-2024
                     - front: Tuesday
                       back: Morning
                       reviewStatus: '0.0'
-                      lastReview: 14-01-2024
+                      lastReview: 14-07-2024
                     - front: Wednesday
                       back: Afternoon
                       reviewStatus: '0.0'
-                      lastReview: 15-01-2024
+                      lastReview: 15-07-2024
               required:
                 - userID
                 - flashcardName
@@ -289,7 +289,7 @@ paths:
                 properties:
                   cards:
                     type: array
-                    description: 'The card ID, a 77-digits unique identifier of the exact flashcard retrieved from the folder.'
+                    description: 'The card ID, a unique numerical identifier of the exact flashcard retrieved from the folder.'
                     items:
                       type: string
                   description:
@@ -365,7 +365,7 @@ paths:
                 properties:
                   cards:
                     type: array
-                    description: 'The card ID, a 77-digits unique identifier of the exact flashcard retrieved from the folder.'
+                    description: 'The card ID, a unique numerical identifier of the exact flashcard retrieved from the folder.'
                     items:
                       type: string
                   description:
@@ -477,7 +477,7 @@ paths:
               properties:
                 cardID:
                   type: string
-                  description: ' A 77-digits unique identifier of the specific card to retrieve from the flashcard set.'
+                  description: ' A unique numerical identifier of the specific card to be retrieved from the flashcard set.'
                   example: '34491212345799755658107639929006996702748532692311513250209090523742322511111'
     post:
       summary: Get Flashcard Item
@@ -535,7 +535,7 @@ paths:
                 cardID:
                   type: string
                   example: '34491212345799755658107639929006996702748532692311513250209090523742322511111'
-                  description: The unique identifier of the specific card to retrieve from the flashcard set.
+                  description: The unique numerical identifier of the specific card being retrieved from the flashcard set.
   /get-today-cards:
     post:
       summary: Get Today Cards
@@ -554,14 +554,14 @@ paths:
                       firstFlashcard:
                         cards:
                           cardID:
-                            last_review: 02/07/2024
+                            last_review: 15/07/2024
                             review_status: '0.0'
                         flashcardID: '6796878844471389968582206160161573797336081897254331165973477783999823937257'
                         flashcardName: firstCard
                       secondFlashcard:
                         cards:
                           cardID:
-                            last_review: 03/07/2024
+                            last_review: 15/07/2024
                             review_status: '0.0'
                         flashcardID: '6796878844471389968582206160161573797336081897254331165973477783999823937257'
                         flashcardName: secondCard
@@ -571,7 +571,7 @@ paths:
                           flashcardName:
                             cards:
                               '37117561297934638728634279553695852046447234529246203144425130738760147640868':
-                                last_review: 02/07/2024
+                                last_review: 15/07/2024
                                 review_status: '0.0'
                             flashcardID: '6796878844881389968582206160161573797336081897254331165973477783999823937257'
                             flashcardName: firstCard
@@ -594,19 +594,19 @@ paths:
                             properties:
                               cardID:
                                 type: object
-                                description: A 77-digit unique identifier for a specific card item within the flashcard. Has `last_review` and `review_status` properties.
+                                description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                 properties:
                                   last_review:
                                     type: string
                                     description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
-                                    example: 02/07/2024
+                                    example: 15/07/2024
                                   review_status:
                                     type: string
-                                    description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned.'
+                                    description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned.'
                                     example: '0.0'
                           flashcardID:
                             type: string
-                            description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                            description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                             example: '6796878844471389968582206160161573797336081811111331165973477783999823937257'
                           flashcardName:
                             type: string
@@ -622,19 +622,19 @@ paths:
                             properties:
                               cardID:
                                 type: object
-                                description: A 77-digit unique identifier for a specific card item within the flashcard. Has `last_review` and `review_status` properties.
+                                description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                 properties:
                                   last_review:
                                     type: string
                                     description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
-                                    example: 03/07/2024
+                                    example: 15/07/2024
                                   review_status:
                                     type: string
-                                    description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned.'
+                                    description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned.'
                                     example: '0.0'
                           flashcardID:
                             type: string
-                            description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                            description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                           flashcardName:
                             type: string
                             description: 'The name of the current flashcard.  '
@@ -665,17 +665,17 @@ paths:
                                         type: object
                                         x-stoplight:
                                           id: 7spigejsdhd9s
-                                        description: A 77-digit unique identifier for a specific card item within the flashcard. Has `last_review` and `review_status` properties.
+                                        description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                         properties:
                                           last_review:
                                             type: string
                                             description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                           review_status:
                                             type: string
-                                            description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned.'
+                                            description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned.'
                                   flashcardID:
                                     type: string
-                                    description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                                    description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                                   flashcardName:
                                     type: string
                                     description: 'The name of the current flashcard.  '
@@ -700,7 +700,7 @@ paths:
       operationId: get-get-today-cards
       x-stoplight:
         id: 144ypjxh6u3n4
-      description: 'Get all the flashcards to be learned today for a user. If a card''s review status is 0.0, it is not started; if it is 0.x, it is actively studying; if it is >= 1.x, it is learned.'
+      description: 'Get all the flashcards to be learned today for a user. If a card''s review status is `0.0`, it is not started; if it is `0.x`, it is actively studying; if it is >= `1.x`, it is learned.'
       requestBody:
         content:
           application/json:
@@ -713,7 +713,7 @@ paths:
                   type: string
                   x-stoplight:
                     id: x9opv12liwlhi
-                  description: 'The identity of the user learning the flashcards today. '
+                  description: 'The identity of the user learning the flashcards. '
                   example: user1
         description: ''
   /get-all-cards:
@@ -734,14 +734,14 @@ paths:
                       firstFlashcard:
                         cards:
                           cardID:
-                            last_review: 02/07/2024
+                            last_review: 15/07/2024
                             review_status: '0.0'
                         flashcardID: '6796878844471389968582206160161573797336081897254331165973477783999823937257'
                         flashcardName: firstCard
                       secondFlashcard:
                         cards:
                           cardID:
-                            last_review: 03/07/2024
+                            last_review: 15/07/2024
                             review_status: '0.0'
                         flashcardID: '6796878844471389968582206160161573797336081897254331165973477783999823937257'
                         flashcardName: secondCard
@@ -753,7 +753,7 @@ paths:
                           flashcardName:
                             cards:
                               '37117561297934638728634279553695852046447234529246203144425130738760147640868':
-                                last_review: 02/07/2024
+                                last_review: 15/07/2024
                                 review_status: '0.0'
                             flashcardID: '6796878844881389968582206160161573797336081897254331165973477783999823937257'
                             flashcardName: firstCard
@@ -776,17 +776,17 @@ paths:
                             properties:
                               cardID:
                                 type: object
-                                description: A 77-digit unique identifier for a specific card item within the flashcard. Has last_review and review_status properties.
+                                description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                 properties:
                                   last_review:
                                     type: string
                                     description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                   review_status:
                                     type: string
-                                    description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned. '
+                                    description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned. '
                           flashcardID:
                             type: string
-                            description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                            description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                           flashcardName:
                             type: string
                             description: The name of the current flashcard.
@@ -800,17 +800,17 @@ paths:
                             properties:
                               cardID:
                                 type: object
-                                description: A 77-digit unique identifier for a specific card item within the flashcard. Has last_review and review_status properties.
+                                description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                 properties:
                                   last_review:
                                     type: string
                                     description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                   review_status:
                                     type: string
-                                    description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned. '
+                                    description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned. '
                           flashcardID:
                             type: string
-                            description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                            description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                           flashcardName:
                             type: string
                             description: The name of the current flashcard.
@@ -824,7 +824,7 @@ paths:
                         properties:
                           parent-name-3:
                             type: object
-                            description: 'A folder nested within the parent-name-2 folder, containing specific flashcards.'
+                            description: 'A folder nested within the `parent-name-2` folder, containing specific flashcards.'
                             properties:
                               Flashcard:
                                 type: object
@@ -838,7 +838,7 @@ paths:
                                     properties:
                                       cardID:
                                         type: object
-                                        description: A 77-digit unique identifier for a specific card item within the flashcard. Has last_review and review_status properties.
+                                        description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                         x-stoplight:
                                           id: vtzd3ybisgqvr
                                         properties:
@@ -847,10 +847,10 @@ paths:
                                             description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                           review_status:
                                             type: string
-                                            description: 'The current review status of the card, where 0.0 indicates that the card is not started; 0.x indicates that the card is actively studying; and >= 1.x indicates that the card is learned. '
+                                            description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned. '
                                   flashcardID:
                                     type: string
-                                    description: A 77-digit unique identifier of the current flashcard. This is different from cardID.
+                                    description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                                   flashcardName:
                                     type: string
                                     description: The name of the current flashcard.
@@ -924,7 +924,7 @@ paths:
       operationId: post-move-flashcard-set
       x-stoplight:
         id: o2sks9y2lv56j
-      description: Move a flashcard set to a new location. Folder locations, such as `currentLocation` or `moveLocation`, are in the format **"myfolder 1/myfolder2"**. If the card is in the root folder, the folder path is **""**.
+      description: Move a flashcard set to a new location. Folder locations, such as `currentLocation` or `moveLocation`, are in the format `myfolder1/myfolder2`. If the card is in the root folder, the folder path should be an empty string `""`.
       requestBody:
         content:
           application/json:
@@ -952,7 +952,7 @@ paths:
                   example: My-first-folder
                 flashcardID:
                   type: string
-                  description: A 77-digit unique identifier of the flashcard. This is different from cardID.
+                  description: A unique numerical identifier of the flashcard. This is different from `cardID`.
                   example: '22456683691481111127441553357143855166282726011111761972795191711430217049598'
                 moveLocation:
                   type: string
@@ -1007,7 +1007,7 @@ paths:
                 Example 1:
                   userID: '123'
                   goalXP: '100'
-                  endDate: 30/01/2022
+                  endDate: 30/07/2024
               required:
                 - userID
                 - goalXP
@@ -1023,14 +1023,14 @@ paths:
                   description: The desired amount of experience points (XP) the user aims to achieve with this goal.
                 endDate:
                   type: string
-                  example: 08/08/2024
+                  example: 30/07/2024
                   description: 'The date by which the user intends to achieve the XP goal, in dd/mm/yyyy format.'
             examples:
               Example 1:
                 value:
                   userID: '123'
                   goalXP: '100'
-                  endDate: 08/08/2024
+                  endDate: 30/07/2024
       tags:
         - Goal
     servers:
@@ -1081,7 +1081,7 @@ paths:
                 Example 1:
                   userID: user7000
                   cardsToRevise: '4'
-                  endDate: 07/07/2024
+                  endDate: 30/07/2024
               required:
                 - userID
                 - cardsToRevise
@@ -1120,7 +1120,7 @@ paths:
                       data:
                         cards_revised_so_far: '0'
                         cards_to_revise: '4'
-                      end_date: 07/07/2024
+                      end_date: 30/07/2024
                       fail_date: ''
                       status: in progress
                       title: Revise 4 cards by 07/07/2024
@@ -1128,7 +1128,7 @@ paths:
                     '46882192866017507647804408894345572659406282731228567391554804537877046919642':
                       data:
                         goal_xp: '60'
-                        start_date: 03/07/2024
+                        start_date: 15/07/2024
                         starting_xp: '0'
                       end_date: 30/07/2024
                       fail_date: ''
@@ -1156,7 +1156,7 @@ paths:
                             example: '4'
                       end_date:
                         type: string
-                        example: 07/07/2024
+                        example: 30/07/2024
                         description: 'The date by which the current goal must end, in dd/mm/yyyy format.'
                       fail_date:
                         type: string
@@ -1168,7 +1168,7 @@ paths:
                         description: 'The current status of a goal, which can be either `completed`, `in progress`, or `failed`.'
                       title:
                         type: string
-                        example: Revise 4 cards by 07/07/2024
+                        example: Revise 4 cards by 15/07/2024
                         description: 'The name assigned to a goal. '
                       type:
                         type: string
@@ -1191,7 +1191,7 @@ paths:
                           start_date:
                             type: string
                             description: ' Associated with XP goals, this indicates the date when the XP goal began. '
-                            example: 03/07/2024
+                            example: 15/07/2024
                           starting_xp:
                             type: string
                             description: 'Associated with XP goals, this indicates the initial amount of experience points (XP) at the beginning of the goal.'
@@ -1344,7 +1344,7 @@ paths:
                 value:
                   userID: '123'
                   goalID: goal1
-                  newEndDate: 30/01/2022
+                  newEndDate: 30/07/2024
                   newTitle: title1
                   newCardsToRevise: '4'
       tags:
@@ -1408,7 +1408,7 @@ paths:
                 Example 1:
                   userID: user7000
                   goalID: '46882192866017507647804408894345572659406282731228567391554804537877046919642'
-                  newEndDate: 08/08/2024
+                  newEndDate: 15/07/2024
                   newTitle: Updated Title for XP Goal
                   newGoalXP: '80'
               required:
@@ -1428,7 +1428,7 @@ paths:
                 newEndDate:
                   type: string
                   description: ' The new end date for the XP goal, formatted as `dd/mm/yyyy`. '
-                  example: 08/08/2024
+                  example: 15/07/2024
                 newTitle:
                   type: string
                   example: Updated Title for XP Goal
@@ -1442,7 +1442,7 @@ paths:
                 value:
                   userID: user123
                   goalID: goal1
-                  newEndDate: 08/08/2024
+                  newEndDate: 15/07/2024
                   newTitle: title1
                   newGoalXP: '40'
       tags:
@@ -1520,8 +1520,8 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    10-07-2024: '2'
-                    11-07-2024: '2'
+                    15-07-2024: '2'
+                    16-07-2024: '2'
                 properties:
                   date:
                     type: string
@@ -1592,9 +1592,9 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    11-07-2024: '2'
+                    15-07-2024: '2'
                 properties:
-                  11-07-2024:
+                  16-07-2024:
                     type: string
                     example: '2'
                     description: A key-value pair of dates (formatted as `dd-mm-yyyy`) and the user's streak count for that date.
